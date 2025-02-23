@@ -10,3 +10,6 @@ package-lock.json
 *.db
 
 *.sql
+
+*.toml
+*.db-journal

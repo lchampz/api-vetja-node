@@ -4,8 +4,8 @@ import { User } from "../Models/User";
 export class AuthController {
   static async signUp(req: Request, res: Response) {
     try {
-      const {  password, name, email } = req.body;
-      const response = await new User().signUp({ password, name, email });
+      const {  senha, nome, email, cpf, telefone } = req.body;
+      const response = await new User().signUp({ senha, nome, email, cpf, telefone });
       return res.json(response);
     } catch (error) {
       return res.status(500).json({ message: "Erro ao criar usuário", error });
@@ -13,8 +13,8 @@ export class AuthController {
   }
 
   static async signIn(req: Request, res: Response) {
-    const { email, password } = req.body;
-    const response = await new User().signIn({ email, password });
+    const { email, senha } = req.body;
+    const response = await new User().signIn({ email, senha });
     return res.json(response);
   }
 }

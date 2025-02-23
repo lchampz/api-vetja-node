@@ -7,45 +7,44 @@ import jwt from "jsonwebtoken";
 const SECRET = process.env.SECRET as string;
 
 export class Auth {
-  async signIn(user: ISignIn): Promise<IResponseUser> {
-    const findedEmail = await prisma.user.findFirst({where: {email: user.email}});
+  async signIn(cliente: ISignIn): Promise<IResponseUser> {
+    const findedEmail = await prisma.cliente.findFirst({where: {email: cliente.email}});
 
     if(!findedEmail) return { message: "Email ou senha incorretos.", status: false, token: null };
 
-    const verifyPass = await bcrypt.compare(user.password, findedEmail.password);
+    const verifyPass = await bcrypt.compare(cliente.senha, findedEmail.senha);
 
     if (!verifyPass)
       return { message: "Email ou senha incorretos.", status: false, token: null };
     
-    const token = jwt.sign({id: findedEmail.id }, SECRET, {expiresIn: '8h'});
+    const token = jwt.sign({id: findedEmail.idCliente }, SECRET, {expiresIn: '8h'});
     
-    const date = new Date()
-
-    await prisma.user.update({where: {email: findedEmail.email}, data: {last_login: date.toISOString()}})
-
     return {message: "Login efetuado.", status: true, token: token};
   }
 
-  async signUp(user: ISignUp): Promise<IResponse> {
-    const userExists = await prisma.user.findFirst({
+  async signUp(cliente: ISignUp): Promise<IResponse> {
+    const clienteExists = await prisma.cliente.findFirst({
       where: {
-        email: user.email,
+        email: cliente.email,
       },
     });
 
-    if (userExists) return { message: "Email já utilizado.", status: false };
+    if (clienteExists) return { message: "Email já utilizado.", status: false };
 
-    const hashPassword = await bcrypt.hash(user.password, 10);
+    const hashPass = await bcrypt.hash(cliente.senha, 10);
 
-    const newUser = await prisma.user.create({
+    const newCustomer = await prisma.cliente.create({
       data: {
-        email: user.email,
-        name: user.name,
-        password: hashPassword,
+        email: cliente.email,
+        nome: cliente.nome,
+        senha: hashPass,
+        cpf: cliente.cpf,
+        telefone: cliente.telefone,
+        
       },
     });
 
-    if(newUser) return {message: "Usuário cadastrado com sucesso.", status: true}
+    if(newCustomer) return {message: "Usuário cadastrado com sucesso.", status: true}
     else return {message: "Erro ao cadastrar usuário.", status: false}
   }
 

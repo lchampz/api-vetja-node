@@ -10,13 +10,69 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id          String    @id @default(uuid())
-  name        String
-  email       String    @unique
-  password    String
-  last_login  DateTime?
-  last_access DateTime?
+model Cliente {
+  idCliente String     @id @default(uuid())
+  cpf       String     @unique
+  nome      String
+  telefone  String
+  email     String     @unique
+  senha     String
+  Endereco  Endereco[]
+  Animal    Animal[]
 
-  @@map("user")
+  @@map("Cliente")
+}
+
+model Endereco {
+  idEndereco String  @id @default(uuid())
+  rua        String
+  numero     Int
+  bairro     String
+  cidade     String
+  estado     String
+  cep        String
+  idCliente  String
+  Cliente    Cliente @relation(fields: [idCliente], references: [idCliente])
+
+  @@map("Endereco")
+}
+
+model Animal {
+  idAnimal  String  @id @default(uuid())
+  nome      String
+  raca      String
+  idade     Int
+  idCliente String
+  Cliente   Cliente @relation(fields: [idCliente], references: [idCliente])
+
+  @@map("Animal")
+}
+
+model Veterinario {
+  idVeterinario            String                     @id @default(uuid())
+  crmv                     String                     @unique
+  nome                     String
+  telefone                 String
+  email                    String
+  VeterinarioEspecialidade VeterinarioEspecialidade[]
+
+  @@map("Veterinario")
+}
+
+model Especialidade {
+  idEspecialidade          String                     @id @default(uuid())
+  nome                     String
+  VeterinarioEspecialidade VeterinarioEspecialidade[]
+
+  @@map("Especialidade")
+}
+
+model VeterinarioEspecialidade {
+  idVeterinarioEspecialidade String        @id @default(uuid())
+  idVeterinario              String
+  idEspecialidade            String
+  Especialidade              Especialidade @relation(fields: [idEspecialidade], references: [idEspecialidade])
+  Veterinario                Veterinario   @relation(fields: [idVeterinario], references: [idVeterinario])
+
+  @@map("VeterinarioEspecialidade")
 }

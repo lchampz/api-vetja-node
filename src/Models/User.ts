@@ -5,11 +5,8 @@ import { Auth } from "./Auth";
 
 export class User extends Auth {
   async getUserInfo(id: string): Promise<ISanitizeUser | null> {
-    const user = await prisma.user.findFirst({
-      omit: {
-        password: true,
-      },
-      where: { id: id },
+    const user = await prisma.cliente.findFirst({
+      where: { idCliente: id },
     });
     return user;
   }

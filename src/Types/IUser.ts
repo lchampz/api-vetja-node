@@ -2,20 +2,22 @@ import { Request } from "express";
 
 export interface IUser {
   id: number;
-  name: string;
-  password: string;
+  nome: string;
+  senha: string;
   email: string;
 }
 
 export interface ISignUp {
-  name: string;
+  nome: string;
   email: string;
-  password: string;
+  senha: string;
+  cpf: string;
+  telefone: string;
 }
 
 export interface ISignIn {
   email: string;
-  password: string;
+  senha: string;
 }
 
 export interface IUserToken {
@@ -23,11 +25,8 @@ export interface IUserToken {
 }
 
 export interface ISanitizeUser {
-  name: string;
+  nome: string;
   email: string;
-  avatar: string;
-  last_login?: Date | null;
-  last_access?: Date | null;
 }
 
 export interface IAuthenticatedRequest extends Request {
