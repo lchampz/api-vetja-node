@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { UserController } from "../Controllers/UserController";
+import { ClienteController } from "../Controllers/UserController";
 import { AuthMiddleware } from "../Middleware/AuthMiddleware.js";
 
 const router = Router();
 
-router.get("/user", AuthMiddleware, UserController.getUserInfo);
+router.get("/user", AuthMiddleware, ClienteController.getUserInfo);
+router.post("/delete", AuthMiddleware, ClienteController.deleteUser);
+router.put("/user", AuthMiddleware, ClienteController.updateUser);
 
 export default router;
