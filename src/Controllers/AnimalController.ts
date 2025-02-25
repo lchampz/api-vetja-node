@@ -41,7 +41,7 @@ export class AnimalController {
   static async updateAnimal(req: IAuthenticatedRequest, res: Response) {
     try {
       const clsAnimal = this.getAnimalInstance();
-      const updatedAnimal = await clsAnimal.updateAnimal(req.params.id, req.body);
+      const updatedAnimal = await clsAnimal.updateAnimal(req.userId!, req.body);
       if (!updatedAnimal) return res.status(404).json({ msg: "Animal não encontrado" });
       return res.json(updatedAnimal);
     } catch (error) {
@@ -52,7 +52,7 @@ export class AnimalController {
   static async deleteAnimal(req: IAuthenticatedRequest, res: Response) {
     try {
       const clsAnimal = this.getAnimalInstance();
-      const deleted = await clsAnimal.deleteAnimal(req.params.id);
+      const deleted = await clsAnimal.deleteAnimal(req.userId!);
       if (!deleted) return res.status(404).json({ msg: "Animal não encontrado" });
       return res.json({ msg: "Animal deletado com sucesso" });
     } catch (error) {

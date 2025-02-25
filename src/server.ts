@@ -3,6 +3,9 @@ import http from "http";
 import path from "path";
 import authRoutes from "./Routes/auth.route"; 
 import userRoutes from "./Routes/user.route"
+import animalRoutes from "./Routes/animal.route"
+
+//TO-DO: importar rotas, validar se o usuario pode fazer a ação, preguiça de fazer agr
 
 class App {
   private PORT: number;
@@ -29,8 +32,7 @@ class App {
     
     this.app.use("/auth", authRoutes);
     this.app.use("/users", userRoutes);
-    // this.app.use("/chats", chatRoutes);
-    // this.app.use("/messages", messageRoutes);
+
 
     this.app.get("/", (req, res) => {
       res.send('Hello World');
