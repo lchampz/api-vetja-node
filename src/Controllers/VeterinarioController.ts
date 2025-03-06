@@ -41,9 +41,9 @@ export class VeterinarioController {
   static async updateVeterinario(req: IAuthenticatedRequest, res: Response) {
     try {
       const clsVeterinario = this.getVeterinarioInstance();
-      const updatedVeterinario = await clsVeterinario.updateVeterinario(req.userId!, req.body);
-      if (!updatedVeterinario) return res.status(404).json({ msg: "Veterinário não encontrado" });
-      return res.json(updatedVeterinario);
+     // const updatedVeterinario = await clsVeterinario.updateVeterinario(req.userId!, req.body);
+     // if (!updatedVeterinario) return res.status(404).json({ msg: "Veterinário não encontrado" });
+     // return res.json(updatedVeterinario);
     } catch (error) {
       return res.status(500).json({ msg: "Erro interno do servidor" });
     }
@@ -52,9 +52,9 @@ export class VeterinarioController {
   static async deleteVeterinario(req: IAuthenticatedRequest, res: Response) {
     try {
       const clsVeterinario = this.getVeterinarioInstance();
-      const deleted = await clsVeterinario.deleteVeterinario(req.userId!);
-      if (!deleted) return res.status(404).json({ msg: "Veterinário não encontrado" });
-      return res.json({ msg: "Veterinário deletado com sucesso" });
+      //const deleted = await clsVeterinario.deleteVeterinario(req.userId!);
+      //if (!deleted) return res.status(404).json({ msg: "Veterinário não encontrado" });
+      //return res.json({ msg: "Veterinário deletado com sucesso" });
     } catch (error) {
       return res.status(500).json({ msg: "Erro interno do servidor" });
     }

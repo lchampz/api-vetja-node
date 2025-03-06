@@ -6,6 +6,12 @@ export class Cliente extends Auth {
   async getUserInfo(id: string): Promise<ISanitizeUser | null> {
     const user = await prisma.cliente.findFirst({
       where: { idCliente: id },
+      select: {
+        senha: false,
+        email: true,
+        nome: true,
+        idCliente: true
+      },
     });
     return user;
   }
@@ -28,4 +34,5 @@ export class Cliente extends Auth {
   async deleteUser(idCliente: string) {
     return await prisma.cliente.delete({ where: { idCliente } });
   }
+
 }

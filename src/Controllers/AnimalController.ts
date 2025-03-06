@@ -41,9 +41,9 @@ export class AnimalController {
   static async updateAnimal(req: IAuthenticatedRequest, res: Response) {
     try {
       const clsAnimal = this.getAnimalInstance();
-      const updatedAnimal = await clsAnimal.updateAnimal(req.userId!, req.body);
-      if (!updatedAnimal) return res.status(404).json({ msg: "Animal não encontrado" });
-      return res.json(updatedAnimal);
+      //const updatedAnimal = await clsAnimal.updateAnimal(req.userId!, req.body);
+      //if (!updatedAnimal) return res.status(404).json({ msg: "Animal não encontrado" });
+      //return res.json(updatedAnimal);
     } catch (error) {
       return res.status(500).json({ msg: "Erro interno do servidor" });
     }
@@ -52,9 +52,9 @@ export class AnimalController {
   static async deleteAnimal(req: IAuthenticatedRequest, res: Response) {
     try {
       const clsAnimal = this.getAnimalInstance();
-      const deleted = await clsAnimal.deleteAnimal(req.userId!);
-      if (!deleted) return res.status(404).json({ msg: "Animal não encontrado" });
-      return res.json({ msg: "Animal deletado com sucesso" });
+     // const deleted = await clsAnimal.deleteAnimal(req.userId!);
+     // if (!deleted) return res.status(404).json({ msg: "Animal não encontrado" });
+     // return res.json({ msg: "Animal deletado com sucesso" });
     } catch (error) {
       return res.status(500).json({ msg: "Erro interno do servidor" });
     }
