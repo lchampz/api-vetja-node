@@ -17,7 +17,14 @@ export class Cliente extends Auth {
   }
 
   async getAllUsers() {
-    return await prisma.cliente.findMany();
+    return await prisma.cliente.findMany({
+      select: {
+        senha: false,
+        email: true,
+        nome: true,
+        idCliente: true
+      }
+    });
   }
 
   async getUserById(idCliente: string) {
