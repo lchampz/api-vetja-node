@@ -1,6 +1,6 @@
 import { IResponse, IResponseUser } from '../Types/IResponse';
 import { prisma } from "./Prisma";
-import { IUser, ISignIn, IUserToken, ISignUp } from "../Types/IUser";
+import { ISignIn, IUserToken, ISignUp } from "../Types/IUser";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 

@@ -4,6 +4,7 @@ import { IAuthenticatedRequest } from "../Types/IUser";
 import { Auth } from "../Models/Auth";
 
 export class ClienteController {
+
   private static getClienteInstance() {
     return new Cliente();
   }
@@ -39,11 +40,11 @@ export class ClienteController {
 
   static async getAllUsers(req: Request, res: Response) {
     try {
-      const clsUser = this.getClienteInstance();
+      const clsUser = new Cliente();
       const users = await clsUser.getAllUsers();
       return res.json(users);
     } catch (error) {
-      return res.status(500).json({ msg: "Erro interno do servidor" });
+      return res.status(500).json({ msg: "Erro interno do servidor", error });
     }
   }
 

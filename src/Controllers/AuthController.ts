@@ -15,6 +15,6 @@ export class AuthController {
   static async signIn(req: Request, res: Response) {
     const { email, senha } = req.body;
     const response = await new Cliente().signIn({ email, senha });
-    return res.json(response);
+    return res.json([response]);
   }
 }
