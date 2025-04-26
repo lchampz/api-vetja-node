@@ -29,12 +29,24 @@ export class ClienteController {
     return user;
   }
 
-  static async getUserInfo(req: Request, res: Response) {
+  
+  static async getUserByEmail(req: IAuthenticatedRequest, res: Response) {
+    try {
+      const clsUser = new Cliente();
+      const user = await clsUser.getUserByEmail(req.body.email);
+      return res.json(user);
+    } catch (error) {
+      return res.status(500).json({ message: "Erro interno do servidor", error: req.headers });
+    }
+  }
+
+
+  static async getUserInfo(req: IAuthenticatedRequest, res: Response) {
     try {
       const user = await this.getUserFromToken(req);
       return res.json(user);
     } catch (error) {
-      return res.status(500).json({ msg: "Erro interno do servidor", error: req.headers });
+      return res.status(500).json({ message: "Erro interno do servidor", error: req.headers });
     }
   }
 
@@ -44,7 +56,7 @@ export class ClienteController {
       const users = await clsUser.getAllUsers();
       return res.json(users);
     } catch (error) {
-      return res.status(500).json({ msg: "Erro interno do servidor", error });
+      return res.status(500).json({ message: "Erro interno do servidor", error });
     }
   }
 
@@ -52,34 +64,36 @@ export class ClienteController {
     try {
       const clsUser = this.getClienteInstance();
       const user = await clsUser.getUserById(req.params.id);
-      if (!user) return res.status(404).json({ msg: "Usuário não encontrado" });
+      if (!user) return res.status(404).json({ message: "Usuário não encontrado" });
       return res.json(user);
     } catch (error) {
-      return res.status(500).json({ msg: "Erro interno do servidor" });
+      return res.status(500).json({ message: "Erro interno do servidor" });
     }
   }
 
   static async updateUser(req: IAuthenticatedRequest, res: Response) {
     try {
-      const user = await this.getUserFromToken(req);
-      const clsUser = this.getClienteInstance();
-      const updatedUser = await clsUser.updateUser(user.idCliente, req.body);
-      if (!updatedUser) return res.status(404).json({ msg: "Usuário não encontrado" });
+      const id = req.body.idCliente;
+      const data = req.body;
+      delete data.idCliente; 
+      const clsUser = new Cliente();
+      const updatedUser = await clsUser.updateUser(id, data);
+      if (!updatedUser) return res.status(404).json({ message: "Usuário não encontrado" });
       return res.json(updatedUser);
     } catch (error) {
-      return res.status(500).json({ msg: "Erro interno do servidor" });
+      return res.status(500).json({ message: "Erro interno do servidor" });
     }
   }
 
   static async deleteUser(req: IAuthenticatedRequest, res: Response) {
     try {
-      const user = await this.getUserFromToken(req);
-      const clsUser = this.getClienteInstance();
-      const deleted = await clsUser.deleteUser(user.idCliente);
-      if (!deleted) return res.status(404).json({ msg: "Usuário não encontrado" });
-      return res.json({ msg: "Usuário deletado com sucesso" });
+      const email = req.body.email;
+      const clsUser = new Cliente();
+      const deleted = await clsUser.deleteUser(email);
+      if (!deleted) return res.status(404).json({ message: "Usuário não encontrado" });
+      return res.json({ message: "Usuário deletado com sucesso" });
     } catch (error) {
-      return res.status(500).json({ msg: "Erro interno do servidor" });
+      return res.status(500).json({ message: "Erro interno do servidor" });
     }
   }
 }

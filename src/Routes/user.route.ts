@@ -4,9 +4,10 @@ import { AuthMiddleware } from "../Middleware/AuthMiddleware.js";
 
 const router = Router();
 
-router.get("/user", AuthMiddleware, ClienteController.getUserInfo);
-router.post("/delete", AuthMiddleware, ClienteController.deleteUser);
+router.get("/user", ClienteController.getUserInfo);
+router.post("/delete", ClienteController.deleteUser);
 router.get("/all", ClienteController.getAllUsers)
-router.put("/user", AuthMiddleware, ClienteController.updateUser);
+router.put("/user", ClienteController.updateUser);
+router.post("/user/email", ClienteController.getUserByEmail);
 
 export default router;

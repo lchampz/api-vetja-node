@@ -27,6 +27,10 @@ export class Cliente extends Auth {
     });
   }
 
+  async getUserByEmail(email: string) {
+    return await prisma.cliente.findFirst({ where: { email } });
+  }
+
   async getUserById(idCliente: string) {
     return await prisma.cliente.findUnique({ where: { idCliente } });
   }
@@ -38,8 +42,8 @@ export class Cliente extends Auth {
     });
   }
 
-  async deleteUser(idCliente: string) {
-    return await prisma.cliente.delete({ where: { idCliente } });
+  async deleteUser(email: string) {
+    return await prisma.cliente.delete({ where: { email } });
   }
 
 }
