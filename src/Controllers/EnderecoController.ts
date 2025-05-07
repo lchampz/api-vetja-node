@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
 import { Endereco } from "../Models/Endereco";
 import { IAuthenticatedRequest } from "../Types/IUser";
-import { ClienteController } from "../Controllers/UserController";
+import { UserController as ClienteController } from "../Controllers/UserController";
 
 export class EnderecoController {
   private static getEnderecoInstance() {
@@ -14,55 +14,114 @@ export class EnderecoController {
 
   static async getAllEnderecos(req: IAuthenticatedRequest, res: Response) {
     try {
+      if (!req.userId) {
+        return res.status(401).json({ msg: "Usuário não autenticado" });
+      }
+
       const clsEndereco = this.getEnderecoInstance();
-      const clsCliente = this.getClienteInstance();
-     
-      //const enderecos = await clsEndereco.getAllEnderecos(req.userId!);
-      //return res.json(enderecos);
+      const enderecos = await clsEndereco.getAllEnderecos();
+      return res.json(enderecos);
     } catch (error) {
+      console.error('Error in getAllEnderecos:', error);
       return res.status(500).json({ msg: "Erro interno do servidor" });
     }
   }
 
   static async getEnderecoById(req: Request, res: Response) {
     try {
+      const { id } = req.params;
+      if (!id) {
+        return res.status(400).json({ msg: "ID do endereço não fornecido" });
+      }
+
       const clsEndereco = this.getEnderecoInstance();
-      const endereco = await clsEndereco.getEnderecoById(req.params.id, "1");
+      const endereco = await clsEndereco.getEnderecoById(id);
       if (!endereco) return res.status(404).json({ msg: "Endereço não encontrado" });
       return res.json(endereco);
     } catch (error) {
+      console.error('Error in getEnderecoById:', error);
       return res.status(500).json({ msg: "Erro interno do servidor" });
     }
   }
 
   static async createEndereco(req: IAuthenticatedRequest, res: Response) {
     try {
+      const { rua, numero, bairro, cidade, estado, cep } = req.body;
+
+      if (!rua || !numero || !bairro || !cidade || !estado || !cep) {
+        return res.status(400).json({ msg: "Todos os campos obrigatórios devem ser preenchidos" });
+      }
+
+      if (!req.userId) {
+        return res.status(401).json({ msg: "Usuário não autenticado" });
+      }
+
       const clsEndereco = this.getEnderecoInstance();
-      const newEndereco = await clsEndereco.createEndereco(req.body);
+      const newEndereco = await clsEndereco.createEndereco({
+        rua,
+        numero,
+        bairro,
+        cidade,
+        estado,
+        cep,
+        idCliente: req.userId
+      });
       return res.status(201).json(newEndereco);
     } catch (error) {
+      console.error('Error in createEndereco:', error);
       return res.status(500).json({ msg: "Erro interno do servidor" });
     }
   }
 
   static async updateEndereco(req: IAuthenticatedRequest, res: Response) {
     try {
+      const { id } = req.params;
+      const { rua, numero, bairro, cidade, estado, cep } = req.body;
+
+      if (!id) {
+        return res.status(400).json({ msg: "ID do endereço não fornecido" });
+      }
+
+      if (!req.userId) {
+        return res.status(401).json({ msg: "Usuário não autenticado" });
+      }
+
       const clsEndereco = this.getEnderecoInstance();
-      const updatedEndereco = await clsEndereco.updateEndereco(req.params.id, req.body);
+      const updatedEndereco = await clsEndereco.updateEndereco(id, {
+        rua,
+        numero,
+        bairro,
+        cidade,
+        estado,
+        cep,
+        idCliente: req.userId
+      });
       if (!updatedEndereco) return res.status(404).json({ msg: "Endereço não encontrado" });
       return res.json(updatedEndereco);
     } catch (error) {
+      console.error('Error in updateEndereco:', error);
       return res.status(500).json({ msg: "Erro interno do servidor" });
     }
   }
 
   static async deleteEndereco(req: IAuthenticatedRequest, res: Response) {
     try {
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(400).json({ msg: "ID do endereço não fornecido" });
+      }
+
+      if (!req.userId) {
+        return res.status(401).json({ msg: "Usuário não autenticado" });
+      }
+
       const clsEndereco = this.getEnderecoInstance();
-     // const deleted = await clsEndereco.deleteEndereco(req.params.id, );
-     // if (!deleted) return res.status(404).json({ msg: "Endereço não encontrado" });
+      const deleted = await clsEndereco.deleteEndereco(id);
+      if (!deleted) return res.status(404).json({ msg: "Endereço não encontrado" });
       return res.json({ msg: "Endereço deletado com sucesso" });
     } catch (error) {
+      console.error('Error in deleteEndereco:', error);
       return res.status(500).json({ msg: "Erro interno do servidor" });
     }
   }

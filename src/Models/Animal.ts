@@ -1,26 +1,69 @@
 import { prisma } from "./Prisma";
+import { IAnimal, ICreateAnimal } from "../DTOs/AnimalDTO";
 
 export class Animal {
-  async getAllAnimais() {
-    return await prisma.animal.findMany();
-  }
-
-  async getAnimalById(idAnimal: string) {
-    return await prisma.animal.findUnique({ where: { idAnimal } });
-  }
-
-  async createAnimal(data: any) {
-    return await prisma.animal.create({ data });
-  }
-
-  async updateAnimal(idAnimal: string, data: any) {
-    return await prisma.animal.update({
-      where: { idAnimal },
-      data,
+  async getAllAnimais(): Promise<IAnimal[]> {
+    return await prisma.animal.findMany({
+      select: {
+        idAnimal: true,
+        nome: true,
+        raca: true,
+        idade: true,
+        idCliente: true
+      }
     });
   }
 
-  async deleteAnimal(idAnimal: string) {
-    return await prisma.animal.delete({ where: { idAnimal } });
+  async getAnimalById(idAnimal: string): Promise<IAnimal | null> {
+    return await prisma.animal.findUnique({
+      where: { idAnimal },
+      select: {
+        idAnimal: true,
+        nome: true,
+        raca: true,
+        idade: true,
+        idCliente: true
+      }
+    });
+  }
+
+  async createAnimal(data: ICreateAnimal): Promise<IAnimal> {
+    return await prisma.animal.create({
+      data,
+      select: {
+        idAnimal: true,
+        nome: true,
+        raca: true,
+        idade: true,
+        idCliente: true
+      }
+    });
+  }
+
+  async updateAnimal(idAnimal: string, data: Partial<ICreateAnimal>): Promise<IAnimal> {
+    return await prisma.animal.update({
+      where: { idAnimal },
+      data,
+      select: {
+        idAnimal: true,
+        nome: true,
+        raca: true,
+        idade: true,
+        idCliente: true
+      }
+    });
+  }
+
+  async deleteAnimal(idAnimal: string): Promise<IAnimal> {
+    return await prisma.animal.delete({
+      where: { idAnimal },
+      select: {
+        idAnimal: true,
+        nome: true,
+        raca: true,
+        idade: true,
+        idCliente: true
+      }
+    });
   }
 }

@@ -1,63 +1,95 @@
-import { IResponse, IResponseUser } from '../Types/IResponse';
 import { prisma } from "./Prisma";
-import { IUser, ISignIn, IUserToken, ISignUp } from "../Types/IUser";
+import { ISignIn, ISignUp, ISanitizeUser } from "../Types/IUser";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const SECRET = process.env.SECRET as string;
-
 export class Auth {
-  async signIn(cliente: ISignIn): Promise<IResponseUser> {
-    const findedEmail = await prisma.cliente.findFirst({where: {email: cliente.email}});
-
-    if(!findedEmail) return { message: "Email ou senha incorretos.", status: false, token: null };
-
-    const verifyPass = await bcrypt.compare(cliente.senha, findedEmail.senha);
-
-    if (!verifyPass)
-      return { message: "Email ou senha incorretos.", status: false, token: null };
-    
-    const token = jwt.sign({id: findedEmail.idCliente }, SECRET, {expiresIn: '8h'});
-    
-    return {message: "Login efetuado.", status: true, token: token};
-  }
-
-  async signUp(cliente: ISignUp): Promise<IResponse> {
-    const clienteExists = await prisma.cliente.findFirst({
-      where: {
-        email: cliente.email,
-      },
-    });
-
-    if (clienteExists) return { message: "Email já utilizado.", status: false };
-
-    const hashPass = await bcrypt.hash(cliente.senha, 10);
-
-    const newCustomer = await prisma.cliente.create({
-      data: {
-        email: cliente.email,
-        nome: cliente.nome,
-        senha: hashPass,
-        cpf: cliente.cpf,
-        telefone: cliente.telefone,
-        
-      },
-    });
-
-    if(newCustomer) return {message: "Usuário cadastrado com sucesso.", status: true}
-    else return {message: "Erro ao cadastrar usuário.", status: false}
-  }
-
-  parseTokenToId(token: string): IResponse {
-      try {
-        const { id } = jwt.verify(
-          token,
-          process.env.SECRET as string
-        ) as IUserToken;
-       
-        return {status: true, message: id};
-      } catch (error) {
-        return { status: false, message: "Token Expirado" };
+  async signIn(data: ISignIn): Promise<{ token: string; user: ISanitizeUser } | null> {
+    try {
+      if (!process.env.SECRET) {
+        throw new Error("SECRET environment variable is not set");
       }
+
+      const user = await prisma.cliente.findUnique({
+        where: { email: data.email }
+      });
+
+      if (!user) {
+        return null;
+      }
+
+      const isValidPassword = await bcrypt.compare(data.senha, user.senha);
+      if (!isValidPassword) {
+        return null;
+      }
+
+      const token = jwt.sign({ id: user.idCliente }, process.env.SECRET, {
+        expiresIn: "1d"
+      });
+
+      return {
+        token,
+        user: {
+          nome: user.nome,
+          email: user.email,
+          idCliente: user.idCliente
+        }
+      };
+    } catch (error) {
+      console.error("Error in signIn:", error);
+      throw error;
+    }
+  }
+
+  async signUp(data: ISignUp): Promise<ISanitizeUser> {
+    try {
+      const existingUser = await prisma.cliente.findUnique({
+        where: { email: data.email }
+      });
+
+      if (existingUser) {
+        throw new Error("Email já cadastrado");
+      }
+
+      const hashedPassword = await bcrypt.hash(data.senha, 10);
+
+      const user = await prisma.cliente.create({
+        data: {
+          nome: data.nome,
+          email: data.email,
+          senha: hashedPassword,
+          cpf: data.cpf,
+          telefone: data.telefone
+        }
+      });
+
+      return {
+        nome: user.nome,
+        email: user.email,
+        idCliente: user.idCliente
+      };
+    } catch (error) {
+      console.error("Error in signUp:", error);
+      throw error;
+    }
+  }
+
+  async parseTokenToId(token: string): Promise<string> {
+    try {
+      if (!process.env.SECRET) {
+        throw new Error("SECRET environment variable is not set");
+      }
+
+      const decoded = jwt.verify(token, process.env.SECRET) as { id: string };
+      return decoded.id;
+    } catch (error) {
+      if (error instanceof jwt.TokenExpiredError) {
+        throw new Error("Token expirado");
+      }
+      if (error instanceof jwt.JsonWebTokenError) {
+        throw new Error("Token inválido");
+      }
+      throw error;
+    }
   }
 }

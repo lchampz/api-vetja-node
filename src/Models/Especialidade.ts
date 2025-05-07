@@ -1,22 +1,54 @@
 import { prisma } from "./Prisma";
+import { IEspecialidade, ICreateEspecialidade } from "../DTOs/EspecialidadeDTO";
 
 export class Especialidade {
-  async getAllEspecialidades() {
-    return await prisma.especialidade.findMany();
-  }
-
-  async createEspecialidade(data: any) {
-    return await prisma.especialidade.create({ data });
-  }
-
-  async updateEspecialidade(idEspecialidade: string, data: any) {
-    return await prisma.especialidade.update({
-      where: { idEspecialidade },
-      data,
+  async getAllEspecialidades(): Promise<IEspecialidade[]> {
+    return await prisma.especialidade.findMany({
+      select: {
+        idEspecialidade: true,
+        nome: true
+      }
     });
   }
 
-  async deleteEspecialidade(idEspecialidade: string) {
-    return await prisma.especialidade.delete({ where: { idEspecialidade } });
+  async getEspecialidadeById(idEspecialidade: string): Promise<IEspecialidade | null> {
+    return await prisma.especialidade.findUnique({
+      where: { idEspecialidade },
+      select: {
+        idEspecialidade: true,
+        nome: true
+      }
+    });
+  }
+
+  async createEspecialidade(data: ICreateEspecialidade): Promise<IEspecialidade> {
+    return await prisma.especialidade.create({
+      data,
+      select: {
+        idEspecialidade: true,
+        nome: true
+      }
+    });
+  }
+
+  async updateEspecialidade(idEspecialidade: string, data: ICreateEspecialidade): Promise<IEspecialidade> {
+    return await prisma.especialidade.update({
+      where: { idEspecialidade },
+      data,
+      select: {
+        idEspecialidade: true,
+        nome: true
+      }
+    });
+  }
+
+  async deleteEspecialidade(idEspecialidade: string): Promise<IEspecialidade> {
+    return await prisma.especialidade.delete({
+      where: { idEspecialidade },
+      select: {
+        idEspecialidade: true,
+        nome: true
+      }
+    });
   }
 }

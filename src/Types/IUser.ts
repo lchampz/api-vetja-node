@@ -31,5 +31,6 @@ export interface ISanitizeUser {
 }
 
 export interface IAuthenticatedRequest extends Request {
-    token?: string;
-  }
+  token?: string;
+  userId?: string;
+}
