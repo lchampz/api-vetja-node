@@ -4,14 +4,6 @@ import { Auth } from "../Models/Auth";
 import { IAuthenticatedRequest } from "../Types/IUser";
 
 export class UserController {
-  private static getClienteInstance() {
-    return new Cliente();
-  }
-
-  private static getAuthInstance() {
-    return new Auth();
-  }
-
   static async getUserFromToken(req: IAuthenticatedRequest, res: Response) {
     try {
       const token = req.headers.authorization?.split(" ")[1];
@@ -19,13 +11,13 @@ export class UserController {
         return res.status(401).json({ msg: "Token não fornecido" });
       }
 
-      const clsAuth = this.getAuthInstance();
+      const clsAuth = new Auth();
       const userId = await clsAuth.parseTokenToId(token);
       if (!userId) {
         return res.status(401).json({ msg: "Token inválido" });
       }
 
-      const clsCliente = this.getClienteInstance();
+      const clsCliente = new Cliente();
       const user = await clsCliente.getClienteById(userId);
       if (!user) {
         return res.status(404).json({ msg: "Usuário não encontrado" });
@@ -52,7 +44,7 @@ export class UserController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsCliente = this.getClienteInstance();
+      const clsCliente = new Cliente();
       const user = await clsCliente.getClienteById(req.userId);
       if (!user) {
         return res.status(404).json({ msg: "Usuário não encontrado" });
@@ -71,7 +63,7 @@ export class UserController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsCliente = this.getClienteInstance();
+      const clsCliente = new Cliente();
       const users = await clsCliente.getAllClientes();
       return res.json(users);
     } catch (error) {
@@ -91,7 +83,7 @@ export class UserController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsCliente = this.getClienteInstance();
+      const clsCliente = new Cliente();
       const user = await clsCliente.getClienteById(id);
       if (!user) {
         return res.status(404).json({ msg: "Usuário não encontrado" });
@@ -106,19 +98,14 @@ export class UserController {
 
   static async updateUser(req: IAuthenticatedRequest, res: Response) {
     try {
-      const { id } = req.params;
       const { nome, email, telefone } = req.body;
-
-      if (!id) {
-        return res.status(400).json({ msg: "ID do usuário não fornecido" });
-      }
 
       if (!req.userId) {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsCliente = this.getClienteInstance();
-      const updatedUser = await clsCliente.updateCliente(id, { nome, email, telefone });
+      const clsCliente = new Cliente();
+      const updatedUser = await clsCliente.updateCliente(req.userId, { nome, email, telefone });
       if (!updatedUser) {
         return res.status(404).json({ msg: "Usuário não encontrado" });
       }
@@ -132,17 +119,13 @@ export class UserController {
 
   static async deleteUser(req: IAuthenticatedRequest, res: Response) {
     try {
-      const { id } = req.params;
-      if (!id) {
-        return res.status(400).json({ msg: "ID do usuário não fornecido" });
-      }
 
       if (!req.userId) {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsCliente = this.getClienteInstance();
-      const deletedUser = await clsCliente.deleteCliente(id);
+      const clsCliente = new Cliente();
+      const deletedUser = await clsCliente.deleteCliente(req.userId);
       if (!deletedUser) {
         return res.status(404).json({ msg: "Usuário não encontrado" });
       }

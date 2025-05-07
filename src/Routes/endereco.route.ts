@@ -4,10 +4,10 @@ import { AuthMiddleware } from "../Middleware/AuthMiddleware.js";
 
 const router = Router();
 
-router.get("/enderecos", AuthMiddleware, EnderecoController.getAllEnderecos);
-router.get("/endereco/:id", AuthMiddleware, EnderecoController.getEnderecoById);
-router.post("/endereco", AuthMiddleware, EnderecoController.createEndereco);
-router.put("/endereco", AuthMiddleware, EnderecoController.updateEndereco);
-router.delete("/endereco", AuthMiddleware, EnderecoController.deleteEndereco);
+router.get("/addresses", AuthMiddleware, EnderecoController.getAllEnderecos);
+router.get("/address/:id", AuthMiddleware, EnderecoController.getEnderecoById);
+router.post("/address", AuthMiddleware, EnderecoController.createEndereco);
+router.put("/address/:id", AuthMiddleware, EnderecoController.updateEndereco);
+router.delete("/address/:id", AuthMiddleware, EnderecoController.deleteEndereco);
 
 export default router;

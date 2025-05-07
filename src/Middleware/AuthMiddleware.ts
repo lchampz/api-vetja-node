@@ -1,17 +1,30 @@
-import {  Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import { Cliente } from "../Models/Cliente";
 import { IAuthenticatedRequest } from "../Types/IUser";
 
 export const AuthMiddleware = async (req: IAuthenticatedRequest, res: Response, next: NextFunction) => {
+  try {
     const { authorization } = req.headers;
-  if (!authorization) return res.status(401).json({ msg: "Não autorizado" });
+    if (!authorization) {
+      return res.status(401).json({ msg: "Token não fornecido" });
+    }
 
-  const token = authorization.split(" ")[1];
-  const response = new Cliente().parseTokenToId(token);
+    const token = authorization.split(" ")[1];
+    if (!token) {
+      return res.status(401).json({ msg: "Formato do token inválido" });
+    }
 
-  if (!response.status) return res.status(401).json({ message: response.message });
+    const clsCliente = new Cliente();
+    const userId = await clsCliente.parseTokenToId(token);
 
-  req.userId = response.message;
-  next();
+    if (!userId) {
+      return res.status(401).json({ msg: "Token inválido ou expirado" });
+    }
 
+    req.userId = userId;
+    next();
+  } catch (error) {
+    console.error("Error in AuthMiddleware:", error);
+    return res.status(401).json({ msg: "Erro na autenticação" });
+  }
 }

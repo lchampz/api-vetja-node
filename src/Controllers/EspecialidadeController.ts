@@ -3,17 +3,13 @@ import { Especialidade } from "../Models/Especialidade";
 import { IAuthenticatedRequest } from "../Types/IUser";
 
 export class EspecialidadeController {
-  private static getEspecialidadeInstance() {
-    return new Especialidade();
-  }
-
   static async getAllEspecialidades(req: IAuthenticatedRequest, res: Response) {
     try {
       if (!req.userId) {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsEspecialidade = this.getEspecialidadeInstance();
+      const clsEspecialidade = new Especialidade();
       const especialidades = await clsEspecialidade.getAllEspecialidades();
       return res.json(especialidades);
     } catch (error) {
@@ -33,7 +29,7 @@ export class EspecialidadeController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsEspecialidade = this.getEspecialidadeInstance();
+      const clsEspecialidade = new Especialidade();
       const especialidade = await clsEspecialidade.getEspecialidadeById(id);
       if (!especialidade) {
         return res.status(404).json({ msg: "Especialidade não encontrada" });
@@ -58,7 +54,7 @@ export class EspecialidadeController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsEspecialidade = this.getEspecialidadeInstance();
+      const clsEspecialidade = new Especialidade();
       const especialidade = await clsEspecialidade.createEspecialidade({ nome });
       return res.status(201).json(especialidade);
     } catch (error) {
@@ -84,7 +80,7 @@ export class EspecialidadeController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsEspecialidade = this.getEspecialidadeInstance();
+      const clsEspecialidade = new Especialidade();
       const especialidade = await clsEspecialidade.updateEspecialidade(id, { nome });
       if (!especialidade) {
         return res.status(404).json({ msg: "Especialidade não encontrada" });
@@ -108,7 +104,7 @@ export class EspecialidadeController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsEspecialidade = this.getEspecialidadeInstance();
+      const clsEspecialidade = new Especialidade();
       const especialidade = await clsEspecialidade.deleteEspecialidade(id);
       if (!especialidade) {
         return res.status(404).json({ msg: "Especialidade não encontrada" });

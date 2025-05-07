@@ -3,17 +3,13 @@ import { VeterinarioEspecialidade } from "../Models/VeterinarioEspecialidade";
 import { IAuthenticatedRequest } from "../Types/IUser";
 
 export class VeterinarioEspecialidadeController {
-  private static getVeterinarioEspecialidadeInstance() {
-    return new VeterinarioEspecialidade();
-  }
-
   static async getAllVeterinarioEspecialidades(req: IAuthenticatedRequest, res: Response) {
     try {
       if (!req.userId) {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsVeterinarioEspecialidade = this.getVeterinarioEspecialidadeInstance();
+      const clsVeterinarioEspecialidade = new VeterinarioEspecialidade();
       const veterinarioEspecialidades = await clsVeterinarioEspecialidade.getAllVeterinarioEspecialidades();
       return res.json(veterinarioEspecialidades);
     } catch (error) {
@@ -33,7 +29,7 @@ export class VeterinarioEspecialidadeController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsVeterinarioEspecialidade = this.getVeterinarioEspecialidadeInstance();
+      const clsVeterinarioEspecialidade = new VeterinarioEspecialidade();
       const veterinarioEspecialidade = await clsVeterinarioEspecialidade.getVeterinarioEspecialidadeById(id);
       if (!veterinarioEspecialidade) {
         return res.status(404).json({ msg: "Especialidade do veterinário não encontrada" });
@@ -58,7 +54,7 @@ export class VeterinarioEspecialidadeController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsVeterinarioEspecialidade = this.getVeterinarioEspecialidadeInstance();
+      const clsVeterinarioEspecialidade = new VeterinarioEspecialidade();
       const veterinarioEspecialidade = await clsVeterinarioEspecialidade.createVeterinarioEspecialidade({
         idVeterinario,
         idEspecialidade
@@ -81,7 +77,7 @@ export class VeterinarioEspecialidadeController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsVeterinarioEspecialidade = this.getVeterinarioEspecialidadeInstance();
+      const clsVeterinarioEspecialidade = new VeterinarioEspecialidade();
       const veterinarioEspecialidade = await clsVeterinarioEspecialidade.deleteVeterinarioEspecialidade(id);
       if (!veterinarioEspecialidade) {
         return res.status(404).json({ msg: "Especialidade do veterinário não encontrada" });

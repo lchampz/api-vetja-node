@@ -4,21 +4,13 @@ import { IAuthenticatedRequest } from "../Types/IUser";
 import { UserController as ClienteController } from "../Controllers/UserController";
 
 export class EnderecoController {
-  private static getEnderecoInstance() {
-    return new Endereco();
-  }
-
-  private static getClienteInstance() {
-    return new ClienteController();
-  }
-
   static async getAllEnderecos(req: IAuthenticatedRequest, res: Response) {
     try {
       if (!req.userId) {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsEndereco = this.getEnderecoInstance();
+      const clsEndereco = new Endereco();
       const enderecos = await clsEndereco.getAllEnderecos();
       return res.json(enderecos);
     } catch (error) {
@@ -34,7 +26,7 @@ export class EnderecoController {
         return res.status(400).json({ msg: "ID do endereço não fornecido" });
       }
 
-      const clsEndereco = this.getEnderecoInstance();
+      const clsEndereco = new Endereco();
       const endereco = await clsEndereco.getEnderecoById(id);
       if (!endereco) return res.status(404).json({ msg: "Endereço não encontrado" });
       return res.json(endereco);
@@ -56,7 +48,7 @@ export class EnderecoController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsEndereco = this.getEnderecoInstance();
+      const clsEndereco = new Endereco();
       const newEndereco = await clsEndereco.createEndereco({
         rua,
         numero,
@@ -86,7 +78,7 @@ export class EnderecoController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsEndereco = this.getEnderecoInstance();
+      const clsEndereco = new Endereco();
       const updatedEndereco = await clsEndereco.updateEndereco(id, {
         rua,
         numero,
@@ -116,7 +108,7 @@ export class EnderecoController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsEndereco = this.getEnderecoInstance();
+      const clsEndereco = new Endereco();
       const deleted = await clsEndereco.deleteEndereco(id);
       if (!deleted) return res.status(404).json({ msg: "Endereço não encontrado" });
       return res.json({ msg: "Endereço deletado com sucesso" });

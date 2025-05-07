@@ -3,17 +3,13 @@ import { Animal } from "../Models/Animal";
 import { IAuthenticatedRequest } from "../Types/IUser";
 
 export class AnimalController {
-  private static getAnimalInstance() {
-    return new Animal();
-  }
-
   static async getAllAnimais(req: IAuthenticatedRequest, res: Response) {
     try {
       if (!req.userId) {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsAnimal = this.getAnimalInstance();
+      const clsAnimal = new Animal();
       const animais = await clsAnimal.getAllAnimais();
       return res.json(animais);
     } catch (error) {
@@ -33,7 +29,7 @@ export class AnimalController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsAnimal = this.getAnimalInstance();
+      const clsAnimal = new Animal();
       const animal = await clsAnimal.getAnimalById(id);
       if (!animal) {
         return res.status(404).json({ msg: "Animal não encontrado" });
@@ -58,7 +54,7 @@ export class AnimalController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsAnimal = this.getAnimalInstance();
+      const clsAnimal = new Animal();
       const animal = await clsAnimal.createAnimal({
         nome,
         raca,
@@ -74,6 +70,7 @@ export class AnimalController {
 
   static async updateAnimal(req: IAuthenticatedRequest, res: Response) {
     try {
+      const clsAnimal = new Animal();
       const { id } = req.params;
       const updateData: { nome?: string; raca?: string; idade?: number } = {};
 
@@ -85,12 +82,17 @@ export class AnimalController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
+      const isAnimalExists = await clsAnimal.getAnimalById(id);
+      if (!isAnimalExists) {
+        return res.status(404).json({ msg: "Animal não encontrado" });
+      }
+
       const { nome, raca, idade } = req.body;
       if (nome) updateData.nome = nome;
       if (raca) updateData.raca = raca;
       if (idade) updateData.idade = Number(idade);
 
-      const clsAnimal = this.getAnimalInstance();
+
       const animal = await clsAnimal.updateAnimal(id, updateData);
       if (!animal) {
         return res.status(404).json({ msg: "Animal não encontrado" });
@@ -114,7 +116,7 @@ export class AnimalController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsAnimal = this.getAnimalInstance();
+      const clsAnimal = new Animal();
       const animal = await clsAnimal.deleteAnimal(id);
       if (!animal) {
         return res.status(404).json({ msg: "Animal não encontrado" });

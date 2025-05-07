@@ -3,17 +3,13 @@ import { Veterinario } from "../Models/Veterinario";
 import { IAuthenticatedRequest } from "../Types/IUser";
 
 export class VeterinarioController {
-  private static getVeterinarioInstance() {
-    return new Veterinario();
-  }
-
   static async getAllVeterinarios(req: IAuthenticatedRequest, res: Response) {
     try {
       if (!req.userId) {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsVeterinario = this.getVeterinarioInstance();
+      const clsVeterinario = new Veterinario();
       const veterinarios = await clsVeterinario.getAllVeterinarios();
       return res.json(veterinarios);
     } catch (error) {
@@ -33,7 +29,7 @@ export class VeterinarioController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsVeterinario = this.getVeterinarioInstance();
+      const clsVeterinario = new Veterinario();
       const veterinario = await clsVeterinario.getVeterinarioById(id);
       if (!veterinario) {
         return res.status(404).json({ msg: "Veterinário não encontrado" });
@@ -58,7 +54,7 @@ export class VeterinarioController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsVeterinario = this.getVeterinarioInstance();
+      const clsVeterinario = new Veterinario();
       const veterinario = await clsVeterinario.createVeterinario({
         nome,
         crmv,
@@ -85,7 +81,7 @@ export class VeterinarioController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsVeterinario = this.getVeterinarioInstance();
+      const clsVeterinario = new Veterinario();
       const veterinario = await clsVeterinario.updateVeterinario(id, {
         nome,
         crmv,
@@ -114,7 +110,7 @@ export class VeterinarioController {
         return res.status(401).json({ msg: "Usuário não autenticado" });
       }
 
-      const clsVeterinario = this.getVeterinarioInstance();
+      const clsVeterinario = new Veterinario();
       const veterinario = await clsVeterinario.deleteVeterinario(id);
       if (!veterinario) {
         return res.status(404).json({ msg: "Veterinário não encontrado" });

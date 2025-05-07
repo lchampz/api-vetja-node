@@ -3,10 +3,6 @@ import { Auth } from "../Models/Auth";
 import { ISignIn, ISignUp } from "../Types/IUser";
 
 export class AuthController {
-  private static getAuthInstance() {
-    return new Auth();
-  }
-
   static async signUp(req: Request, res: Response) {
     try {
       const { nome, email, senha, cpf, telefone } = req.body;
@@ -23,7 +19,7 @@ export class AuthController {
         return res.status(400).json({ msg: "CPF inválido" });
       }
 
-      const clsAuth = this.getAuthInstance();
+      const clsAuth = new Auth();
       const user = await clsAuth.signUp({ nome, email, senha, cpf, telefone });
       return res.status(201).json(user);
     } catch (error) {
@@ -43,7 +39,7 @@ export class AuthController {
         return res.status(400).json({ msg: "Email e senha são obrigatórios" });
       }
 
-      const clsAuth = this.getAuthInstance();
+      const clsAuth = new Auth();
       const result = await clsAuth.signIn({ email, senha });
 
       if (!result) {

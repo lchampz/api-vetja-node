@@ -1,10 +1,11 @@
 import express, { Application } from "express";
 import http from "http";
-import path from "path";
+
 import authRoutes from "./Routes/auth.route";
 import userRoutes from "./Routes/user.route"
 import veterinarioRoutes from "./Routes/veterinario.route"
 import animalRoutes from "./Routes/animal.route"
+import enderecoRoutes from "./Routes/endereco.route"
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
@@ -43,8 +44,8 @@ class App {
     this.app.use("/auth", authRoutes);
     this.app.use("/users", userRoutes);
     this.app.use("/animals", animalRoutes);
-    this.app.use("/veterinarios", veterinarioRoutes);
-
+    this.app.use("/veterinarians", veterinarioRoutes);
+    this.app.use("/addresses", enderecoRoutes);
     this.app.get("/", (req, res) => {
       res.send('Hello World');
     });

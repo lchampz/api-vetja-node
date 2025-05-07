@@ -4,9 +4,10 @@ import { AuthMiddleware } from "../Middleware/AuthMiddleware.js";
 
 const router = Router();
 
-router.get("/veterinarios", AuthMiddleware, VeterinarioController.getAllVeterinarios);
-router.post("/veterinario", AuthMiddleware, VeterinarioController.createVeterinario);
-router.put("/veterinario", AuthMiddleware, VeterinarioController.updateVeterinario);
-router.delete("/veterinario", AuthMiddleware, VeterinarioController.deleteVeterinario);
+router.get("/veterinarian/all", AuthMiddleware, VeterinarioController.getAllVeterinarios);
+router.get("/veterinarian/:id", AuthMiddleware, VeterinarioController.getVeterinarioById);
+router.post("/veterinarian", AuthMiddleware, VeterinarioController.createVeterinario);
+router.put("/veterinarian/:id", AuthMiddleware, VeterinarioController.updateVeterinario);
+router.delete("/veterinarian/:id", AuthMiddleware, VeterinarioController.deleteVeterinario);
 
 export default router;

@@ -1,0 +1,198 @@
+@baseUrl = http://localhost:8000
+@token = token
+
+### Autenticação ###
+
+# Cadastro de Usuário
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+  "nome": "João Silva",
+  "email": "joao@email.com",
+  "senha": "123456",
+  "cpf": "12345678900",
+  "telefone": "11999999999"
+}
+
+### Login
+POST {{baseUrl}}/auth/signin
+Content-Type: application/json
+
+{
+  "email": "joao@email.com",
+  "senha": "123456"
+}
+
+### Clientes ###
+
+# Listar Todos os Clientes
+GET {{baseUrl}}/users/all
+Authorization: Bearer {{token}}
+
+### Obter Cliente por ID
+GET {{baseUrl}}/users/user
+Authorization: Bearer {{token}}
+
+### Atualizar Cliente
+PUT {{baseUrl}}/users/user
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nome": "João Silva Atualizado",
+  "email": "joao.novo@email.com",
+  "telefone": "11988888888"
+}
+
+### Deletar Cliente
+DELETE {{baseUrl}}/users/1
+Authorization: Bearer {{token}}
+
+### Animais ###
+
+# Listar Todos os Animais
+GET {{baseUrl}}/animals/all
+Authorization: Bearer {{token}}
+
+### Obter Animal por ID
+GET {{baseUrl}}/animals/animal/
+Authorization: Bearer {{token}}
+
+### Criar Animal
+POST {{baseUrl}}/animals/animal
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nome": "Rex",
+  "raca": "Labrador",
+  "idade": 3
+}
+
+### Atualizar Animal
+PUT {{baseUrl}}/animals/animal/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nome": "Rex Atualizado",
+  "raca": "Labrador",
+  "idade": 4
+}
+
+### Deletar Animal
+DELETE {{baseUrl}}/animals/1
+Authorization: Bearer {{token}}
+
+### Veterinários ###
+
+# Listar Todos os Veterinários
+GET {{baseUrl}}/veterinarians/all
+Authorization: Bearer {{token}}
+
+### Obter Veterinário por ID
+GET {{baseUrl}}/veterinarians/1
+Authorization: Bearer {{token}}
+
+### Criar Veterinário
+POST {{baseUrl}}/veterinarians
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nome": "Dr. Carlos",
+  "crmv": "12345",
+  "email": "carlos@vet.com",
+  "telefone": "11977777777"
+}
+
+### Atualizar Veterinário
+PUT {{baseUrl}}/veterinarians/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nome": "Dr. Carlos Silva",
+  "crmv": "12345",
+  "email": "carlos.silva@vet.com",
+  "telefone": "11966666666"
+}
+
+### Deletar Veterinário
+DELETE {{baseUrl}}/veterinarians/1
+Authorization: Bearer {{token}}
+
+### Endereços ###
+
+# Listar Todos os Endereços
+GET {{baseUrl}}/addresses
+Authorization: Bearer {{token}}
+
+### Obter Endereço por ID
+GET {{baseUrl}}/addresses/1
+Authorization: Bearer {{token}}
+
+### Criar Endereço
+POST {{baseUrl}}/addresses
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "rua": "Rua das Flores",
+  "numero": 123,
+  "bairro": "Centro",
+  "cidade": "São Paulo",
+  "estado": "SP",
+  "cep": "01234567"
+}
+
+### Atualizar Endereço
+PUT {{baseUrl}}/addresses/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "rua": "Rua das Flores",
+  "numero": 124,
+  "bairro": "Centro",
+  "cidade": "São Paulo",
+  "estado": "SP",
+  "cep": "01234567"
+}
+
+### Deletar Endereço
+DELETE {{baseUrl}}/addresses/1
+Authorization: Bearer {{token}}
+
+### Especialidades ###
+
+# Listar Todas as Especialidades
+GET {{baseUrl}}/specialties
+Authorization: Bearer {{token}}
+
+### Obter Especialidade por ID
+GET {{baseUrl}}/specialties/1
+Authorization: Bearer {{token}}
+
+### Criar Especialidade
+POST {{baseUrl}}/specialties
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nome": "Clínico Geral"
+}
+
+### Atualizar Especialidade
+PUT {{baseUrl}}/specialties/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nome": "Clínico Geral Veterinário"
+}
+
+### Deletar Especialidade
+DELETE {{baseUrl}}/specialties/1
+Authorization: Bearer {{token}} 
