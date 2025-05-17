@@ -56,6 +56,34 @@ export class ServicoController {
     }
   }
 
+  static async createServicos(req: IAuthenticatedRequest, res: Response) {
+    try {
+      const servicos: { nome: string; descricao: string }[] = req.body;
+      if (!Array.isArray(servicos) || servicos.length === 0) {
+        return res.status(400).json({ msg: "A lista de serviços é obrigatória e não pode estar vazia" });
+      }
+      if (!req.userId) {
+        return res.status(401).json({ msg: "Usuário não autenticado" });
+      }
+      // Validação dos campos de cada serviço
+      for (const servico of servicos) {
+        if (!servico.nome || !servico.descricao) {
+          return res.status(400).json({ msg: "Todos os campos são obrigatórios para cada serviço" });
+        }
+      }
+      const clsServico = new Servico();
+      const createdServicos = [];
+      for (const servico of servicos) {
+        const created = await clsServico.createServico(servico);
+        createdServicos.push(created);
+      }
+      return res.status(201).json(createdServicos);
+    } catch (error) {
+      console.error("Error in createServicos:", error);
+      return res.status(500).json({ msg: "Erro interno do servidor" });
+    }
+  }
+
   static async updateServico(req: IAuthenticatedRequest, res: Response) {
     try {
       const { id } = req.params;
