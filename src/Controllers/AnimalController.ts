@@ -59,7 +59,7 @@ export class AnimalController {
         nome,
         raca,
         idade: Number(idade),
-        idCliente: req.userId
+        IDCliente: req.userId
       });
       return res.status(201).json(animal);
     } catch (error) {

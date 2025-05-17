@@ -9,7 +9,7 @@ export class Animal {
         nome: true,
         raca: true,
         idade: true,
-        idCliente: true
+        IDCliente: true
       }
     });
   }
@@ -22,7 +22,7 @@ export class Animal {
         nome: true,
         raca: true,
         idade: true,
-        idCliente: true
+        IDCliente: true
       }
     });
   }
@@ -35,7 +35,7 @@ export class Animal {
         nome: true,
         raca: true,
         idade: true,
-        idCliente: true
+        IDCliente: true
       }
     });
   }
@@ -49,7 +49,7 @@ export class Animal {
         nome: true,
         raca: true,
         idade: true,
-        idCliente: true
+        IDCliente: true
       }
     });
   }
@@ -62,7 +62,7 @@ export class Animal {
         nome: true,
         raca: true,
         idade: true,
-        idCliente: true
+        IDCliente: true
       }
     });
   }

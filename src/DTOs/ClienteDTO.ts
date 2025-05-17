@@ -1,13 +1,15 @@
 export interface ICliente {
-  idCliente: string;
-  nome: string;
-  email: string;
-  telefone: string;
-  cpf: string;
+  IDCliente: number;
+  CPF: string | null;
+  Nome: string;
+  Telefone: string;
+  Email: string;
+  Senha?: string;
 }
 
 export interface IUpdateCliente {
-  nome?: string;
-  email?: string;
-  telefone?: string;
-} 
+  Nome?: string;
+  Email?: string;
+  Telefone?: string;
+  Especialidade?: string;
+}

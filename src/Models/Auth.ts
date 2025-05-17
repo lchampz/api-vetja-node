@@ -23,7 +23,7 @@ export class Auth {
         return null;
       }
 
-      const token = jwt.sign({ id: user.idCliente }, process.env.SECRET, {
+      const token = jwt.sign({ id: user.IDCliente }, process.env.SECRET, {
         expiresIn: "1d"
       });
 
@@ -32,7 +32,7 @@ export class Auth {
         user: {
           nome: user.nome,
           email: user.email,
-          idCliente: user.idCliente
+          IDCliente: user.IDCliente
         }
       };
     } catch (error) {
@@ -66,7 +66,7 @@ export class Auth {
       return {
         nome: user.nome,
         email: user.email,
-        idCliente: user.idCliente
+        IDCliente: user.IDCliente
       };
     } catch (error) {
       console.error("Error in signUp:", error);

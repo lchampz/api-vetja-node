@@ -1,20 +1,20 @@
 export interface IEndereco {
-  idEndereco: string;
-  rua: string;
-  numero: number;
-  bairro: string;
-  cidade: string;
-  estado: string;
-  cep: string;
-  idCliente: string;
+  IDEndereco: number;
+  IDCliente: number | null;
+  Logradouro: string;
+  Numero: number;
+  Complemento: string;
+  Bairro: string;
+  Cidade: string;
+  CEP: string;
 }
 
 export interface ICreateEndereco {
-  rua: string;
-  numero: number;
-  bairro: string;
-  cidade: string;
-  estado: string;
-  cep: string;
-  idCliente: string;
-} 
+  IDCliente?: number;
+  Logradouro: string;
+  Numero: number;
+  Complemento: string;
+  Bairro: string;
+  Cidade: string;
+  CEP: string;
+}

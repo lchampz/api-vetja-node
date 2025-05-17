@@ -25,9 +25,9 @@ export interface IUserToken {
 }
 
 export interface ISanitizeUser {
-  nome: string;
-  email: string;
-  idCliente: string;
+  Nome: string;
+  Email: string;
+  IDCliente: number;
 }
 
 export interface IAuthenticatedRequest extends Request {

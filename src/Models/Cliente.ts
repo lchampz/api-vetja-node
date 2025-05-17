@@ -7,63 +7,56 @@ export class Cliente extends Auth {
   async getAllClientes(): Promise<ICliente[]> {
     return await prisma.cliente.findMany({
       select: {
-        idCliente: true,
-        nome: true,
-        email: true,
-        telefone: true,
-        cpf: true
+        IDCliente: true,
+        Nome: true,
+        Email: true,
+        Telefone: true,
+        CPF: true
       }
     });
   }
 
-  async getClienteById(idCliente: string): Promise<ICliente | null> {
+  async getClienteById(IDCliente: number): Promise<ICliente | null> {
     return await prisma.cliente.findUnique({
-      where: { idCliente },
+      where: { IDCliente },
       select: {
-        idCliente: true,
-        nome: true,
-        email: true,
-        telefone: true,
-        cpf: true
+        IDCliente: true,
+        Nome: true,
+        Email: true,
+        Telefone: true,
+        CPF: true
       }
     });
   }
 
-  async updateCliente(idCliente: string, data: IUpdateCliente): Promise<ICliente> {
+  async updateCliente(IDCliente: number, data: IUpdateCliente): Promise<ICliente> {
     return await prisma.cliente.update({
-      where: { idCliente },
+      where: { IDCliente },
       data,
       select: {
-        idCliente: true,
-        nome: true,
-        email: true,
-        telefone: true,
-        cpf: true
+        IDCliente: true,
+        Nome: true,
+        Email: true,
+        Telefone: true,
+        CPF: true,
       }
     });
   }
 
-  async deleteCliente(idCliente: string): Promise<ICliente> {
+  async deleteCliente(IDCliente: number): Promise<ICliente> {
     return await prisma.cliente.delete({
-      where: { idCliente },
-      select: {
-        idCliente: true,
-        nome: true,
-        email: true,
-        telefone: true,
-        cpf: true
-      }
+      where: { IDCliente }
     });
   }
 
-  async getUserInfo(id: string): Promise<ISanitizeUser | null> {
+  async getUserInfo(id: number): Promise<ISanitizeUser | null> {
     const user = await prisma.cliente.findFirst({
-      where: { idCliente: id },
+      where: { IDCliente: id },
       select: {
-        senha: false,
-        email: true,
-        nome: true,
-        idCliente: true
+        Senha: false,
+        Email: true,
+        Nome: true,
+        IDCliente: true
       },
     });
     return user;
@@ -73,18 +66,18 @@ export class Cliente extends Auth {
     return await prisma.cliente.findMany();
   }
 
-  async getUserById(idCliente: string): Promise<ICliente | null> {
-    return await prisma.cliente.findUnique({ where: { idCliente } });
+  async getUserById(IDCliente: number): Promise<ICliente | null> {
+    return await prisma.cliente.findUnique({ where: { IDCliente } });
   }
 
-  async updateUser(idCliente: string, data: IUpdateCliente): Promise<ICliente> {
+  async updateUser(IDCliente: number, data: IUpdateCliente): Promise<ICliente> {
     return await prisma.cliente.update({
-      where: { idCliente },
+      where: { IDCliente },
       data,
     });
   }
 
-  async deleteUser(idCliente: string): Promise<ICliente> {
-    return await prisma.cliente.delete({ where: { idCliente } });
+  async deleteUser(IDCliente: number): Promise<ICliente> {
+    return await prisma.cliente.delete({ where: { IDCliente } });
   }
 }

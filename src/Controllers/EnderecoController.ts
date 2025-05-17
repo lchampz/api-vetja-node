@@ -56,7 +56,7 @@ export class EnderecoController {
         cidade,
         estado,
         cep,
-        idCliente: req.userId
+        IDCliente: req.userId
       });
       return res.status(201).json(newEndereco);
     } catch (error) {
@@ -86,7 +86,7 @@ export class EnderecoController {
         cidade,
         estado,
         cep,
-        idCliente: req.userId
+        IDCliente: req.userId
       });
       if (!updatedEndereco) return res.status(404).json({ msg: "Endereço não encontrado" });
       return res.json(updatedEndereco);

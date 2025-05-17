@@ -3,51 +3,51 @@ import { IEspecialidade, ICreateEspecialidade } from "../DTOs/EspecialidadeDTO";
 
 export class Especialidade {
   async getAllEspecialidades(): Promise<IEspecialidade[]> {
-    return await prisma.especialidade.findMany({
+    return await prisma.Especialidade.findMany({
       select: {
-        idEspecialidade: true,
-        nome: true
+        IDEspecialidade: true,
+        Nome: true
       }
     });
   }
 
-  async getEspecialidadeById(idEspecialidade: string): Promise<IEspecialidade | null> {
-    return await prisma.especialidade.findUnique({
-      where: { idEspecialidade },
+  async getEspecialidadeById(IDEspecialidade: number): Promise<IEspecialidade | null> {
+    return await prisma.Especialidade.findUnique({
+      where: { IDEspecialidade },
       select: {
-        idEspecialidade: true,
-        nome: true
+        IDEspecialidade: true,
+        Nome: true
       }
     });
   }
 
   async createEspecialidade(data: ICreateEspecialidade): Promise<IEspecialidade> {
-    return await prisma.especialidade.create({
+    return await prisma.Especialidade.create({
       data,
       select: {
-        idEspecialidade: true,
-        nome: true
+        IDEspecialidade: true,
+        Nome: true
       }
     });
   }
 
-  async updateEspecialidade(idEspecialidade: string, data: ICreateEspecialidade): Promise<IEspecialidade> {
-    return await prisma.especialidade.update({
-      where: { idEspecialidade },
+  async updateEspecialidade(IDEspecialidade: number, data: ICreateEspecialidade): Promise<IEspecialidade> {
+    return await prisma.Especialidade.update({
+      where: { IDEspecialidade },
       data,
       select: {
-        idEspecialidade: true,
-        nome: true
+        IDEspecialidade: true,
+        Nome: true
       }
     });
   }
 
-  async deleteEspecialidade(idEspecialidade: string): Promise<IEspecialidade> {
-    return await prisma.especialidade.delete({
-      where: { idEspecialidade },
+  async deleteEspecialidade(IDEspecialidade: number): Promise<IEspecialidade> {
+    return await prisma.Especialidade.delete({
+      where: { IDEspecialidade },
       select: {
-        idEspecialidade: true,
-        nome: true
+        IDEspecialidade: true,
+        Nome: true
       }
     });
   }

@@ -1,14 +1,18 @@
 export interface IVeterinario {
-  idVeterinario: string;
-  nome: string;
-  crmv: string;
-  email: string;
-  telefone: string;
+  IDVeterinario: number;
+  CRMV: number;
+  Nome: string;
+  Especialidade: string;
+  Telefone: string;
+  Email: string;
+  CEP: string;
 }
 
 export interface ICreateVeterinario {
-  nome: string;
-  crmv: string;
-  email: string;
-  telefone: string;
-} 
+  CRMV: number;
+  Nome: string;
+  Especialidade: string;
+  Telefone: string;
+  Email: string;
+  CEP: string;
+}

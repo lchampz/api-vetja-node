@@ -5,30 +5,30 @@ export class Endereco {
   async getAllEnderecos(): Promise<IEndereco[]> {
     return await prisma.endereco.findMany({
       select: {
-        idEndereco: true,
-        rua: true,
-        numero: true,
-        bairro: true,
-        cidade: true,
-        estado: true,
-        cep: true,
-        idCliente: true
+        IDEndereco: true,
+        Logradouro: true,
+        Numero: true,
+        Bairro: true,
+        Cidade: true,
+        Estado: true,
+        Cep: true,
+        IDCliente: true
       }
     });
   }
 
-  async getEnderecoById(idEndereco: string): Promise<IEndereco | null> {
+  async getEnderecoById(IDEndereco: number): Promise<IEndereco | null> {
     return await prisma.endereco.findUnique({
-      where: { idEndereco },
+      where: { IDEndereco },
       select: {
-        idEndereco: true,
-        rua: true,
-        numero: true,
-        bairro: true,
-        cidade: true,
-        estado: true,
-        cep: true,
-        idCliente: true
+        IDEndereco: true,
+        Logradouro: true,
+        Numero: true,
+        Bairro: true,
+        Cidade: true,
+        Complemento: true,
+        CEP: true,
+        IDCliente: true
       }
     });
   }
@@ -37,47 +37,47 @@ export class Endereco {
     return await prisma.endereco.create({
       data,
       select: {
-        idEndereco: true,
-        rua: true,
-        numero: true,
-        bairro: true,
-        cidade: true,
-        estado: true,
-        cep: true,
-        idCliente: true
+        IDEndereco: true,
+        Logradouro: true,
+        Numero: true,
+        Bairro: true,
+        Cidade: true,
+        Complemento: true,
+        CEP: true,
+        IDCliente: true
       }
     });
   }
 
-  async updateEndereco(idEndereco: string, data: Partial<ICreateEndereco>): Promise<IEndereco> {
+  async updateEndereco(IDEndereco: number, data: Partial<ICreateEndereco>): Promise<IEndereco> {
     return await prisma.endereco.update({
-      where: { idEndereco },
+      where: { IDEndereco },
       data,
       select: {
-        idEndereco: true,
-        rua: true,
-        numero: true,
-        bairro: true,
-        cidade: true,
-        estado: true,
-        cep: true,
-        idCliente: true
+        IDEndereco: true,
+        Logradouro: true,
+        Numero: true,
+        Bairro: true,
+        Cidade: true,
+        Complemento: true,
+        CEP: true,
+        IDCliente: true
       }
     });
   }
 
-  async deleteEndereco(idEndereco: string): Promise<IEndereco> {
+  async deleteEndereco(IDEndereco: number): Promise<IEndereco> {
     return await prisma.endereco.delete({
-      where: { idEndereco },
+      where: { IDEndereco },
       select: {
-        idEndereco: true,
-        rua: true,
-        numero: true,
-        bairro: true,
-        cidade: true,
-        estado: true,
-        cep: true,
-        idCliente: true
+        IDEndereco: true,
+        Logradouro: true,
+        Numero: true,
+        Bairro: true,
+        Cidade: true,
+        Complemento: true,
+        CEP: true,
+        IDCliente: true
       }
     });
   }

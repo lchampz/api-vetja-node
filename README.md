@@ -55,7 +55,7 @@ npm run dev
 ## 📚 Entidades
 
 ### Cliente
-- idCliente (string)
+- IDCliente (string)
 - nome (string)
 - email (string)
 - senha (string)
@@ -67,7 +67,7 @@ npm run dev
 - nome (string)
 - raca (string)
 - idade (number)
-- idCliente (string)
+- IDCliente (string)
 
 ### Veterinário
 - idVeterinario (string)
@@ -84,7 +84,7 @@ npm run dev
 - cidade (string)
 - estado (string)
 - cep (string)
-- idCliente (string)
+- IDCliente (string)
 
 ### Especialidade
 - idEspecialidade (string)
