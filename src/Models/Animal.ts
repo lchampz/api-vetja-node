@@ -7,7 +7,8 @@ export class Animal {
       select: {
         idAnimal: true,
         nome: true,
-        raca: true,
+        gato: true,
+        macho: true,
         idade: true,
         idCliente: true
       }
@@ -20,8 +21,9 @@ export class Animal {
       select: {
         idAnimal: true,
         nome: true,
-        raca: true,
+        gato: true,
         idade: true,
+        macho: true,
         idCliente: true
       }
     });
@@ -33,7 +35,8 @@ export class Animal {
       select: {
         idAnimal: true,
         nome: true,
-        raca: true,
+        gato: true,
+        macho: true,
         idade: true,
         idCliente: true
       }
@@ -47,7 +50,9 @@ export class Animal {
       select: {
         idAnimal: true,
         nome: true,
-        raca: true,
+        gato: true,
+        macho: true, 
+        
         idade: true,
         idCliente: true
       }
@@ -60,7 +65,8 @@ export class Animal {
       select: {
         idAnimal: true,
         nome: true,
-        raca: true,
+        macho: true,
+        gato: true,
         idade: true,
         idCliente: true
       }

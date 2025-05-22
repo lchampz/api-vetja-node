@@ -1,3 +1,5 @@
+import { ICliente } from "./ClienteDTO";
+
 export interface IEndereco {
   idEndereco: string;
   rua: string;
@@ -6,7 +8,8 @@ export interface IEndereco {
   cidade: string;
   estado: string;
   cep: string;
-  idCliente: string;
+  idCliente?: string;
+  Cliente?: ICliente
 }
 
 export interface ICreateEndereco {

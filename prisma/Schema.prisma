@@ -5,6 +5,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
 model Servico {
   idServico String @id @default(uuid())
   nome      String
@@ -14,14 +19,8 @@ model Servico {
   @@map("Servico")
 }
 
-datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_FILE")
-}
-
 model Cliente {
   idCliente String     @id @default(uuid())
-  cpf       String     @unique
   nome      String
   telefone  String
   email     String     @unique
@@ -49,7 +48,8 @@ model Endereco {
 model Animal {
   idAnimal  String  @id @default(uuid())
   nome      String
-  raca      String
+  gato      Boolean
+  macho     Boolean
   idade     Int
   idCliente String
   Cliente   Cliente @relation(fields: [idCliente], references: [idCliente])
@@ -61,8 +61,6 @@ model Veterinario {
   idVeterinario            String                     @id @default(uuid())
   crmv                     String                     @unique
   nome                     String
-  telefone                 String
-  email                    String
   VeterinarioEspecialidade VeterinarioEspecialidade[]
 
   @@map("Veterinario")

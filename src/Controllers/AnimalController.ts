@@ -44,9 +44,11 @@ export class AnimalController {
 
   static async createAnimal(req: IAuthenticatedRequest, res: Response) {
     try {
-      const { nome, raca, idade } = req.body;
+      const { nome, gato, macho, idade } = req.body;
 
-      if (!nome || !raca || !idade) {
+      const isValid =  [nome, gato, macho, idade]
+
+      if (isValid.every(Boolean)) {
         return res.status(400).json({ msg: "Todos os campos são obrigatórios" });
       }
 
@@ -57,7 +59,8 @@ export class AnimalController {
       const clsAnimal = new Animal();
       const animal = await clsAnimal.createAnimal({
         nome,
-        raca,
+        gato,
+        macho,
         idade: Number(idade),
         idCliente: req.userId
       });
@@ -72,7 +75,7 @@ export class AnimalController {
     try {
       const clsAnimal = new Animal();
       const { id } = req.params;
-      const updateData: { nome?: string; raca?: string; idade?: number } = {};
+      const updateData: { nome?: string; gato?: boolean; idade?: number, macho?: boolean } = {};
 
       if (!id) {
         return res.status(400).json({ msg: "ID do animal não fornecido" });
@@ -87,9 +90,10 @@ export class AnimalController {
         return res.status(404).json({ msg: "Animal não encontrado" });
       }
 
-      const { nome, raca, idade } = req.body;
+      const { nome, gato, idade, macho } = req.body;
       if (nome) updateData.nome = nome;
-      if (raca) updateData.raca = raca;
+      if (gato) updateData.gato = gato;
+      if (macho) updateData.macho = macho;
       if (idade) updateData.idade = Number(idade);
 
 
