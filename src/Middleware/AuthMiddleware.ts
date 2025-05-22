@@ -15,7 +15,14 @@ export const AuthMiddleware = async (req: IAuthenticatedRequest, res: Response, 
     }
 
     const clsCliente = new Cliente();
-    const userId = await clsCliente.parseTokenToId(token);
+
+    let userId: string;
+    try {
+      userId = await clsCliente.parseTokenToId(token);
+    } catch (error: any) {
+      // Aqui você já pode capturar a mensagem personalizada
+      return res.status(401).json({ msg: error.message || "Token inválido ou expirado" });
+    }
 
     if (!userId) {
       return res.status(401).json({ msg: "Token inválido ou expirado" });
@@ -24,7 +31,7 @@ export const AuthMiddleware = async (req: IAuthenticatedRequest, res: Response, 
     req.userId = userId;
     next();
   } catch (error) {
-    console.error("Error in AuthMiddleware:", error);
+    console.error("Erro no AuthMiddleware:", error);
     return res.status(401).json({ msg: "Erro na autenticação" });
   }
-}
+};
