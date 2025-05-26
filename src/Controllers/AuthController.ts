@@ -11,13 +11,13 @@ export class AuthController {
         return res.status(400).json({ msg: "Todos os campos são obrigatórios" });
       }
 
-      if (senha.length < 6) {
-        return res.status(400).json({ msg: "A senha deve ter pelo menos 6 caracteres" });
-      }
+      // if (senha.length < 6) {
+      //   return res.status(400).json({ msg: "A senha deve ter pelo menos 6 caracteres" });
+      // }
 
-      if (!/^\d{11}$/.test(cpf)) {
-        return res.status(400).json({ msg: "CPF inválido" });
-      }
+      // if (!/^\d{11}$/.test(cpf)) {
+      //   return res.status(400).json({ msg: "CPF inválido" });
+      // }
 
       const clsAuth = new Auth();
       const user = await clsAuth.signUp({ nome, email, senha, cpf, telefone });
