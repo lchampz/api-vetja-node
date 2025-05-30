@@ -20,8 +20,9 @@ export class AuthController {
       }
 
       const clsAuth = new Auth();
-      const user = await clsAuth.signUp({ nome, email, senha, cpf, telefone });
-      return res.status(201).json(user);
+      await clsAuth.signUp({ nome, email, senha, cpf, telefone });
+      const signIn = await clsAuth.signIn({ email, senha });
+      return res.status(201).json({ signIn });
     } catch (error) {
       console.error("Error in signUp:", error);
       if (error instanceof Error && error.message === "Email já cadastrado") {
