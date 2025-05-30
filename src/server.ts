@@ -6,6 +6,7 @@ import userRoutes from "./Routes/user.route"
 import veterinarioRoutes from "./Routes/veterinario.route"
 import animalRoutes from "./Routes/animal.route"
 import enderecoRoutes from "./Routes/endereco.route"
+import servicoRoutes from "./Routes/servico.route"
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
@@ -46,6 +47,7 @@ class App {
     this.app.use("/animals", animalRoutes);
     this.app.use("/veterinarians", veterinarioRoutes);
     this.app.use("/addresses", enderecoRoutes);
+    this.app.use("/services", servicoRoutes);
     this.app.get("/", (req, res) => {
       res.send('Hello World');
     });

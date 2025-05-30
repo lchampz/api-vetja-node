@@ -5,9 +5,18 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Servico {
+  idServico String @id @default(uuid())
+  nome      String
+  descricao String
+  link      String @default("https://wa.me/message/GI7NF6M3VMVWD1")
+
+  @@map("Servico")
+}
+
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_FILE")
 }
 
 model Cliente {
