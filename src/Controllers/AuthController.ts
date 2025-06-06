@@ -5,9 +5,9 @@ import { ISignIn, ISignUp } from "../Types/IUser";
 export class AuthController {
   static async signUp(req: Request, res: Response) {
     try {
-      const { nome, email, senha, cpf, telefone } = req.body;
+      const { nome, email, senha,  telefone } = req.body;
 
-      if (!nome || !email || !senha || !cpf || !telefone) {
+      if (!nome || !email || !senha || !telefone) {
         return res.status(400).json({ msg: "Todos os campos são obrigatórios" });
       }
 
@@ -15,12 +15,9 @@ export class AuthController {
         return res.status(400).json({ msg: "A senha deve ter pelo menos 6 caracteres" });
       }
 
-      if (!/^\d{11}$/.test(cpf)) {
-        return res.status(400).json({ msg: "CPF inválido" });
-      }
 
       const clsAuth = new Auth();
-      await clsAuth.signUp({ nome, email, senha, cpf, telefone });
+      await clsAuth.signUp({ nome, email, senha, telefone });
       const signIn = await clsAuth.signIn({ email, senha });
       return res.status(201).json({ signIn });
     } catch (error) {

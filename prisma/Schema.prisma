@@ -40,7 +40,7 @@ model Endereco {
   estado     String
   cep        String
   idCliente  String
-  Cliente    Cliente @relation(fields: [idCliente], references: [idCliente])
+  Cliente    Cliente @relation(fields: [idCliente], references: [idCliente], onDelete: Cascade)
 
   @@map("Endereco")
 }
@@ -52,7 +52,7 @@ model Animal {
   macho     Boolean
   idade     Int
   idCliente String
-  Cliente   Cliente @relation(fields: [idCliente], references: [idCliente])
+  Cliente   Cliente @relation(fields: [idCliente], references: [idCliente], onDelete: Cascade)
 
   @@map("Animal")
 }
@@ -78,8 +78,8 @@ model VeterinarioEspecialidade {
   idVeterinarioEspecialidade String        @id @default(uuid())
   idVeterinario              String
   idEspecialidade            String
-  Especialidade              Especialidade @relation(fields: [idEspecialidade], references: [idEspecialidade])
-  Veterinario                Veterinario   @relation(fields: [idVeterinario], references: [idVeterinario])
+  Especialidade              Especialidade @relation(fields: [idEspecialidade], references: [idEspecialidade], onDelete: Cascade)
+  Veterinario                Veterinario   @relation(fields: [idVeterinario], references: [idVeterinario], onDelete: Cascade)
 
   @@map("VeterinarioEspecialidade")
 }
