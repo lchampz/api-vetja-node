@@ -44,16 +44,29 @@ export class Cliente extends Auth {
   }
 
   async deleteCliente(idCliente: string): Promise<ICliente> {
-    return await prisma.cliente.delete({
-      where: { idCliente },
-      select: {
-        idCliente: true,
-        nome: true,
-        email: true,
-        telefone: true,
-        cpf: true
+     try {
+      // Exemplo: deletar pets do cliente antes (ajuste conforme seu modelo)
+      await prisma.animal.deleteMany({ where: { idCliente } });
+      // Exemplo: deletar agendamentos do cliente antes (ajuste conforme seu modelo)
+      await prisma.endereco.deleteMany({ where: { idCliente } });
+
+      // Agora pode deletar o cliente
+      return await prisma.cliente.delete({
+        where: { idCliente },
+        select: {
+          idCliente: true,
+          nome: true,
+          email: true,
+          telefone: true,
+          cpf: true
+        }
+      });
+    } catch (error: any) {
+      if (error.code === 'P2003') {
+        throw new Error('Não é possível deletar o cliente pois existem registros relacionados.');
       }
-    });
+      throw error;
+    }
   }
 
   async getUserInfo(id: string): Promise<ISanitizeUser | null> {
