@@ -3,6 +3,31 @@ import { Animal } from "../Models/Animal";
 import { IAuthenticatedRequest } from "../Types/IUser";
 
 export class AnimalController {
+
+  static async getAnimalByUserId(req: IAuthenticatedRequest, res: Response) {
+    try {
+      const { userId } = req.params;
+      if (!userId) {
+        return res.status(400).json({ msg: "ID do usuário não fornecido" });
+      }
+
+      if (!req.userId) {
+        return res.status(401).json({ msg: "Usuário não autenticado" });
+      }
+
+      const clsAnimal = new Animal();
+      const animais = await clsAnimal.getAnimalByUserId(userId);
+      if (animais.length === 0) {
+        return res.status(404).json({ msg: "Nenhum animal encontrado para este usuário" });
+      }
+
+      return res.json(animais);
+    } catch (error) {
+      console.error("Error in getAnimalByUserId:", error);
+      return res.status(500).json({ msg: "Erro interno do servidor" });
+    }
+  }
+
   static async getAllAnimais(req: IAuthenticatedRequest, res: Response) {
     try {
       if (!req.userId) {

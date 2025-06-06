@@ -14,6 +14,19 @@ export class Animal {
     });
   }
 
+  async getAnimalByUserId(idCliente: string): Promise<IAnimal[]> {
+    return await prisma.animal.findMany({
+      where: { idCliente },
+      select: {
+        idAnimal: true,
+        nome: true,
+        raca: true,
+        idade: true,
+        idCliente: true
+      }
+    });
+  }
+
   async getAnimalById(idAnimal: string): Promise<IAnimal | null> {
     return await prisma.animal.findUnique({
       where: { idAnimal },
