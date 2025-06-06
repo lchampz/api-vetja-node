@@ -69,10 +69,15 @@ export class AnimalController {
 
   static async createAnimal(req: IAuthenticatedRequest, res: Response) {
     try {
-      const { nome, raca, idade } = req.body;
+      const { nome, idade, gato, macho } = req.body;
 
-      if (!nome || !raca || !idade) {
-        return res.status(400).json({ msg: "Todos os campos são obrigatórios" });
+      if (
+        typeof nome !== "string" ||
+        typeof idade !== "number" ||
+        typeof gato !== "boolean" ||
+        typeof macho !== "boolean"
+      ) {
+        return res.status(400).json({ msg: "Campos obrigatórios: nome (string), idade (number), gato (boolean), macho (boolean)" });
       }
 
       if (!req.userId) {
@@ -82,8 +87,9 @@ export class AnimalController {
       const clsAnimal = new Animal();
       const animal = await clsAnimal.createAnimal({
         nome,
-        raca,
-        idade: Number(idade),
+        idade,
+        gato,
+        macho,
         idCliente: req.userId
       });
       return res.status(201).json(animal);
@@ -97,7 +103,7 @@ export class AnimalController {
     try {
       const clsAnimal = new Animal();
       const { id } = req.params;
-      const updateData: { nome?: string; raca?: string; idade?: number } = {};
+      const updateData: { nome?: string; idade?: number; gato?: boolean; macho?: boolean } = {};
 
       if (!id) {
         return res.status(400).json({ msg: "ID do animal não fornecido" });
@@ -112,11 +118,15 @@ export class AnimalController {
         return res.status(404).json({ msg: "Animal não encontrado" });
       }
 
-      const { nome, raca, idade } = req.body;
-      if (nome) updateData.nome = nome;
-      if (raca) updateData.raca = raca;
-      if (idade) updateData.idade = Number(idade);
+      const { nome, idade, gato, macho } = req.body;
+      if (typeof nome === "string") updateData.nome = nome;
+      if (typeof idade === "number") updateData.idade = idade;
+      if (typeof gato === "boolean") updateData.gato = gato;
+      if (typeof macho === "boolean") updateData.macho = macho;
 
+      if (Object.keys(updateData).length === 0) {
+        return res.status(400).json({ msg: "Nenhum campo válido para atualizar" });
+      }
 
       const animal = await clsAnimal.updateAnimal(id, updateData);
       if (!animal) {

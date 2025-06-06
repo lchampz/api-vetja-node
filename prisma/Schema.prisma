@@ -21,7 +21,6 @@ datasource db {
 
 model Cliente {
   idCliente String     @id @default(uuid())
-  cpf       String     @unique
   nome      String
   telefone  String
   email     String     @unique
@@ -49,8 +48,9 @@ model Endereco {
 model Animal {
   idAnimal  String  @id @default(uuid())
   nome      String
-  raca      String
+  gato      Boolean
   idade     Int
+  macho     Boolean
   idCliente String
   Cliente   Cliente @relation(fields: [idCliente], references: [idCliente])
 

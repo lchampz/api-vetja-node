@@ -58,7 +58,6 @@ export class Auth {
           nome: data.nome,
           email: data.email,
           senha: hashedPassword,
-          cpf: data.cpf,
           telefone: data.telefone
         }
       });

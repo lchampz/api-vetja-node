@@ -3,7 +3,6 @@ export interface ICliente {
   nome: string;
   email: string;
   telefone: string;
-  cpf: string;
 }
 
 export interface IUpdateCliente {

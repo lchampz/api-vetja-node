@@ -11,7 +11,6 @@ export interface ISignUp {
   nome: string;
   email: string;
   senha: string;
-  cpf: string;
   telefone: string;
 }
 

@@ -10,8 +10,7 @@ export class Cliente extends Auth {
         idCliente: true,
         nome: true,
         email: true,
-        telefone: true,
-        cpf: true
+        telefone: true
       }
     });
   }
@@ -23,8 +22,7 @@ export class Cliente extends Auth {
         idCliente: true,
         nome: true,
         email: true,
-        telefone: true,
-        cpf: true
+        telefone: true
       }
     });
   }
@@ -37,8 +35,7 @@ export class Cliente extends Auth {
         idCliente: true,
         nome: true,
         email: true,
-        telefone: true,
-        cpf: true
+        telefone: true
       }
     });
   }
@@ -50,8 +47,7 @@ export class Cliente extends Auth {
         idCliente: true,
         nome: true,
         email: true,
-        telefone: true,
-        cpf: true
+        telefone: true
       }
     });
   }
