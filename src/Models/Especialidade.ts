@@ -1,5 +1,6 @@
 import { prisma } from "./Prisma";
 import { IEspecialidade, ICreateEspecialidade } from "../DTOs/EspecialidadeDTO";
+import { v4 as uuidv4 } from 'uuid';
 
 export class Especialidade {
   async getAllEspecialidades(): Promise<IEspecialidade[]> {
@@ -23,7 +24,10 @@ export class Especialidade {
 
   async createEspecialidade(data: ICreateEspecialidade): Promise<IEspecialidade> {
     return await prisma.especialidade.create({
-      data,
+      data: {
+        idEspecialidade: uuidv4(),
+        ...data
+      },
       select: {
         idEspecialidade: true,
         nome: true

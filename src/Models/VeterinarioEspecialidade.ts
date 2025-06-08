@@ -1,5 +1,6 @@
 import { prisma } from "./Prisma";
 import { IVeterinarioEspecialidade, ICreateVeterinarioEspecialidade } from "../DTOs/VeterinarioEspecialidadeDTO";
+import { v4 as uuidv4 } from 'uuid';
 
 export class VeterinarioEspecialidade {
   async getAllVeterinarioEspecialidades(): Promise<IVeterinarioEspecialidade[]> {
@@ -25,7 +26,10 @@ export class VeterinarioEspecialidade {
 
   async createVeterinarioEspecialidade(data: ICreateVeterinarioEspecialidade): Promise<IVeterinarioEspecialidade> {
     return await prisma.veterinarioEspecialidade.create({
-      data,
+      data: {
+        idVeterinarioEspecialidade: uuidv4(),
+        ...data
+      },
       select: {
         idVeterinarioEspecialidade: true,
         idVeterinario: true,

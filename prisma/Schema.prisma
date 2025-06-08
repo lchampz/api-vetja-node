@@ -6,12 +6,12 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model Servico {
-  idServico String @id @default(uuid())
+  idServico String @id @db.Char(36)
   nome      String
   descricao String
   link      String @default("https://wa.me/message/GI7NF6M3VMVWD1")
@@ -20,7 +20,7 @@ model Servico {
 }
 
 model Cliente {
-  idCliente String     @id @default(uuid())
+  idCliente String     @id @db.Char(36)
   nome      String
   telefone  String
   email     String     @unique
@@ -32,33 +32,33 @@ model Cliente {
 }
 
 model Endereco {
-  idEndereco String  @id @default(uuid())
+  idEndereco String  @id @db.Char(36)
   rua        String
   numero     Int
   bairro     String
   cidade     String
   estado     String
   cep        String
-  idCliente  String
+  idCliente  String  @db.Char(36)
   Cliente    Cliente @relation(fields: [idCliente], references: [idCliente], onDelete: Cascade)
 
   @@map("Endereco")
 }
 
 model Animal {
-  idAnimal  String  @id @default(uuid())
+  idAnimal  String  @id @db.Char(36)
   nome      String
   gato      Boolean
   idade     Int
   macho     Boolean
-  idCliente String
+  idCliente String  @db.Char(36)
   Cliente   Cliente @relation(fields: [idCliente], references: [idCliente], onDelete: Cascade)
 
   @@map("Animal")
 }
 
 model Veterinario {
-  idVeterinario            String                     @id @default(uuid())
+  idVeterinario            String                     @id @db.Char(36)
   crmv                     String                     @unique
   nome                     String
   VeterinarioEspecialidade VeterinarioEspecialidade[]
@@ -67,7 +67,7 @@ model Veterinario {
 }
 
 model Especialidade {
-  idEspecialidade          String                     @id @default(uuid())
+  idEspecialidade          String                     @id @db.Char(36)
   nome                     String
   VeterinarioEspecialidade VeterinarioEspecialidade[]
 
@@ -75,9 +75,9 @@ model Especialidade {
 }
 
 model VeterinarioEspecialidade {
-  idVeterinarioEspecialidade String        @id @default(uuid())
-  idVeterinario              String
-  idEspecialidade            String
+  idVeterinarioEspecialidade String        @id @db.Char(36)
+  idVeterinario              String        @db.Char(36)
+  idEspecialidade            String        @db.Char(36)
   Especialidade              Especialidade @relation(fields: [idEspecialidade], references: [idEspecialidade], onDelete: Cascade)
   Veterinario                Veterinario   @relation(fields: [idVeterinario], references: [idVeterinario], onDelete: Cascade)
 

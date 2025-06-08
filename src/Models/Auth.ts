@@ -2,6 +2,7 @@ import { prisma } from "./Prisma";
 import { ISignIn, ISignUp, ISanitizeUser } from "../Types/IUser";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { v4 as uuidv4 } from 'uuid';
 
 export class Auth {
   async signIn(data: ISignIn): Promise<{ token: string; user: ISanitizeUser } | null> {
@@ -55,6 +56,7 @@ export class Auth {
 
       const user = await prisma.cliente.create({
         data: {
+          idCliente: uuidv4(),
           nome: data.nome,
           email: data.email,
           senha: hashedPassword,

@@ -1,5 +1,6 @@
 import { prisma } from "./Prisma";
 import { IVeterinario, ICreateVeterinario } from "../DTOs/VeterinarioDTO";
+import { v4 as uuidv4 } from 'uuid';
 
 export class Veterinario {
   async getAllVeterinarios(): Promise<IVeterinario[]> {
@@ -8,8 +9,6 @@ export class Veterinario {
         idVeterinario: true,
         nome: true,
         crmv: true,
-        email: true,
-        telefone: true
       }
     });
   }
@@ -21,21 +20,20 @@ export class Veterinario {
         idVeterinario: true,
         nome: true,
         crmv: true,
-        email: true,
-        telefone: true
       }
     });
   }
 
   async createVeterinario(data: ICreateVeterinario): Promise<IVeterinario> {
     return await prisma.veterinario.create({
-      data,
+      data: {
+        idVeterinario: uuidv4(),
+        ...data
+      },
       select: {
         idVeterinario: true,
         nome: true,
         crmv: true,
-        email: true,
-        telefone: true
       }
     });
   }
@@ -47,9 +45,7 @@ export class Veterinario {
       select: {
         idVeterinario: true,
         nome: true,
-        crmv: true,
-        email: true,
-        telefone: true
+        crmv: true
       }
     });
   }
@@ -60,9 +56,7 @@ export class Veterinario {
       select: {
         idVeterinario: true,
         nome: true,
-        crmv: true,
-        email: true,
-        telefone: true
+        crmv: true
       }
     });
   }

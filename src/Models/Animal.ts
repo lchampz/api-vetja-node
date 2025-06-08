@@ -1,5 +1,6 @@
 import { prisma } from "./Prisma";
 import { IAnimal, ICreateAnimal } from "../DTOs/AnimalDTO";
+import { v4 as uuidv4 } from 'uuid';
 
 export class Animal {
   async getAllAnimais(): Promise<IAnimal[]> {
@@ -45,7 +46,10 @@ export class Animal {
 
   async createAnimal(data: ICreateAnimal): Promise<IAnimal> {
     return await prisma.animal.create({
-      data,
+      data: {
+        idAnimal: uuidv4(),
+        ...data
+      },
       select: {
         idAnimal: true,
         nome: true,

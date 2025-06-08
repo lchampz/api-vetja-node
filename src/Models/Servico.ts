@@ -1,5 +1,6 @@
 import { prisma } from "./Prisma";
 import { IServico, ICreateServico } from "../DTOs/ServicoDTO";
+import { v4 as uuidv4 } from 'uuid';
 
 export class Servico {
   async getAllServicos(): Promise<IServico[]> {
@@ -25,7 +26,10 @@ export class Servico {
 
   async createServico(data: ICreateServico): Promise<IServico> {
     return await prisma.servico.create({
-      data,
+      data: {
+        idServico: uuidv4(),
+        ...data
+      },
       select: {
         idServico: true,
         nome: true,

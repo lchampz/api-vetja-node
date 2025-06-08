@@ -1,5 +1,6 @@
 import { prisma } from "./Prisma";
 import { IEndereco, ICreateEndereco } from "../DTOs/EnderecoDTO";
+import { v4 as uuidv4 } from 'uuid';
 
 export class Endereco {
   async getAllEnderecos(): Promise<IEndereco[]> {
@@ -35,7 +36,10 @@ export class Endereco {
 
   async createEndereco(data: ICreateEndereco): Promise<IEndereco> {
     return await prisma.endereco.create({
-      data,
+      data: {
+        idEndereco: uuidv4(),
+        ...data
+      },
       select: {
         idEndereco: true,
         rua: true,
