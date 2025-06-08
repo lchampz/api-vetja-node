@@ -7,9 +7,23 @@ export class Animal {
       select: {
         idAnimal: true,
         nome: true,
+        idade: true,
         gato: true,
         macho: true,
+        idCliente: true
+      }
+    });
+  }
+
+  async getAnimalByUserId(idCliente: string): Promise<IAnimal[]> {
+    return await prisma.animal.findMany({
+      where: { idCliente },
+      select: {
+        idAnimal: true,
+        nome: true,
         idade: true,
+        gato: true,
+        macho: true,
         idCliente: true
       }
     });
@@ -21,8 +35,8 @@ export class Animal {
       select: {
         idAnimal: true,
         nome: true,
-        gato: true,
         idade: true,
+        gato: true,
         macho: true,
         idCliente: true
       }
@@ -35,9 +49,9 @@ export class Animal {
       select: {
         idAnimal: true,
         nome: true,
+        idade: true,
         gato: true,
         macho: true,
-        idade: true,
         idCliente: true
       }
     });
@@ -50,10 +64,9 @@ export class Animal {
       select: {
         idAnimal: true,
         nome: true,
-        gato: true,
-        macho: true, 
-        
         idade: true,
+        gato: true,
+        macho: true,
         idCliente: true
       }
     });
@@ -65,9 +78,9 @@ export class Animal {
       select: {
         idAnimal: true,
         nome: true,
-        macho: true,
-        gato: true,
         idade: true,
+        gato: true,
+        macho: true,
         idCliente: true
       }
     });

@@ -49,8 +49,8 @@ model Animal {
   idAnimal  String  @id @default(uuid())
   nome      String
   gato      Boolean
-  macho     Boolean
   idade     Int
+  macho     Boolean
   idCliente String
   Cliente   Cliente @relation(fields: [idCliente], references: [idCliente], onDelete: Cascade)
 
