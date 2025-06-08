@@ -5,7 +5,7 @@ import { AuthMiddleware } from "../Middleware/AuthMiddleware.js";
 const router = Router();
 
 router.get("/user", AuthMiddleware, ClienteController.getUserInfo);
-router.delete("/delete", AuthMiddleware, ClienteController.deleteUser);
+router.post("/delete", AuthMiddleware, ClienteController.deleteUser);
 router.get("/all", AuthMiddleware, ClienteController.getAllUsers)
 router.put("/user", AuthMiddleware, ClienteController.updateUser);
 
