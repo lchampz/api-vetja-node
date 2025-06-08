@@ -78,6 +78,7 @@ export class AnimalController {
         typeof macho !== "boolean"
       ) {
         return res.status(400).json({ msg: "Campos obrigatórios: nome (string), idade (number), gato (boolean), macho (boolean)" });
+
       }
 
       if (!req.userId) {
@@ -103,6 +104,7 @@ export class AnimalController {
     try {
       const clsAnimal = new Animal();
       const { id } = req.params;
+      
       const updateData: { nome?: string; idade?: number; gato?: boolean; macho?: boolean } = {};
 
       if (!id) {

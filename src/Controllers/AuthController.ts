@@ -5,6 +5,7 @@ import { ISignIn, ISignUp } from "../Types/IUser";
 export class AuthController {
   static async signUp(req: Request, res: Response) {
     try {
+
       const { nome, email, senha, telefone } = req.body;
 
       if (!nome || !email || !senha || !telefone) {
